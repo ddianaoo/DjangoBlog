@@ -44,6 +44,6 @@ class Post(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'запись'
-        verbose_name_plural = 'записи'
+        verbose_name = 'пост'
+        verbose_name_plural = 'посты'
         ordering = ['-created_at']
