@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'категория'
+        verbose_name = 'категория(ю)'
         verbose_name_plural = 'категории'
         ordering = ['title']
 
