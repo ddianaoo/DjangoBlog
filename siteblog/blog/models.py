@@ -44,6 +44,9 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     views = models.IntegerField(default=0, verbose_name='Просмотры')
 
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'slug': self.slug})
+
     def __str__(self):
         return self.title
 
