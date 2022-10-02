@@ -3,12 +3,12 @@ from django.views.generic import ListView, DetailView
 from .models import *
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+from django.db.models import F
 
 
 
-def get_post(request, slug):
-    return HttpResponse('hello')
-    #need to change this function
+def get_tag(request, slug):
+    return HttpResponse('<p>hello</p>')
 
 
 class Home(ListView):
@@ -37,3 +37,16 @@ class ListPosts(ListView):
         context['title'] = Category.objects.get(slug=self.kwargs['slug'])
         return context
 
+
+class GetPost(DetailView):
+    model = Post
+    context_object_name = 'post'
+    #pk_url_kwarg = 'post_slug'
+    template_name = 'blog/single_post.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object.views = F('views') + 1
+        self.object.save()
+        self.object.refresh_from_db()
+        return context

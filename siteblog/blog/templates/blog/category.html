@@ -23,6 +23,7 @@
                         <h4><span>Posted By: <span class="author-name">{{ post.author }}</span></span></h4>
                         {{post.content|truncatewords_html:20|safe }}
                         <h4><span>{{ post.created_at|date:'d.m.Y' }}</span></h4>
+                        <span> Views: {{ post.views }}</span>
                     </div>
                 </div>
                 {% endfor %}
