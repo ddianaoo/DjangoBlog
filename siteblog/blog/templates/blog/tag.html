@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Записи по тегу :: {{block.super }}{% endblock %}
+
+{% block content %}
+<section class="blog-post-area">
+    <div class="container">
+        <div class="row">
+            <h2>Tag: {{ title }} </h2>
+            <div class="blog-post-area-style">
+                {% for post in posts %}
+                <div class="col-md-3">
+                    <div class="single-post">
+
+                        {% if post.photo %}
+                        <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+                        {% else %}
+                        <img src="https://picsum.photos/id/1060/300/201/?blur=2" alt="{{ post.title }}">
+                        {% endif %}
+
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                        <h4><span>Posted By: <span class="author-name">{{ post.author }}</span></span></h4>
+                        {{post.content|truncatewords_html:20|safe }}
+                        <h4><span>{{ post.created_at|date:'d.m.Y' }}</span></h4>
+                        <span> Views: {{ post.views }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'inc/_paginat.html' %}
+
+</section>
+{% endblock %}

@@ -1,14 +1,23 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import *
-from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import F
 
 
+class PostsByTag(ListView):
+    context_object_name = 'posts'
+    paginate_by = 4
+    model = Tag
+    template_name = 'blog/tag.html'
+    allow_empty = False
 
-def get_tag(request, slug):
-    return HttpResponse('<p>hello</p>')
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs['slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = Tag.objects.get(slug=self.kwargs['slug'])
+        return context
 
 
 class Home(ListView):
@@ -41,7 +50,7 @@ class ListPosts(ListView):
 class GetPost(DetailView):
     model = Post
     context_object_name = 'post'
-    #pk_url_kwarg = 'post_slug'
+    # pk_url_kwarg = 'post_slug'
     template_name = 'blog/single_post.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
