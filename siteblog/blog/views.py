@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import F
 
 
+
 class PostsByTag(ListView):
     context_object_name = 'posts'
     paginate_by = 4
